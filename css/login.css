@@ -1,0 +1,68 @@
+.login-body {
+  background: url(../images/loginbg.jpg) no-repeat;
+  background-size: 100%;
+  background-position: center;
+}
+
+.form-containerlogin {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+}
+
+.form-containerlogin form {
+  width: 50rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  padding: 2rem;
+}
+
+.form-containerlogin form h3 {
+  font-size: 3rem;
+  color: var(--black);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.form-containerlogin form .box {
+  width: 100%;
+  margin: 1rem 0;
+  border-radius: 0.5rem;
+  padding: 2rem 2rem;
+  font-size: 1.5rem;
+  color: var(--black);
+  background-color: var(--textbox);
+}
+
+.form-containerlogin form .dropdownbox {
+  width: 100%;
+  margin: 1rem 0;
+  border-radius: 0.5rem;
+  padding: 2rem 2rem;
+  font-size: 1.5rem;
+  color: var(--black);
+  background-color: var(--textbox);
+}
+
+.form-containerlogin form .box:hover {
+  cursor: text;
+}
+
+.form-containerlogin form .dropdownbox:hover {
+  cursor: auto;
+}
+
+.form-containerlogin form .login-para {
+  margin-top: 2rem;
+  font-size: 1.5rem;
+  color: var(--light-color);
+}
+
+.form-containerlogin form .login-para a {
+  color: var(--green);
+}
+
+.form-containerlogin form p a:hover {
+  text-decoration: underline;
+}

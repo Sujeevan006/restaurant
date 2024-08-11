@@ -21,12 +21,15 @@ if(isset($message)){
 
       <nav class="navbar">
          <a href="customer_page.php">home</a>
-         <a href="shop.php">shop</a>
-         <a href="orders.php">orders</a>
-         <a href="about.php">about</a>
+         <a href="shop.php">About us</a>
+         <a href="orders.php">Menu</a>
+         <a href="about.php">Services</a>
+         <a href="contact.php">Reservations</a>
+         <a href="contact.php">Gallery</a>
          <a href="contact.php">contact</a>
-      </nav>
 
+      </nav>
+      
       <div class="icons">
          <div id="menu-btn" class="fas fa-bars"></div>
          <div id="user-btn" class="fas fa-user"></div>

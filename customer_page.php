@@ -112,6 +112,46 @@ if(isset($_POST['add_to_cart'])){
 
 <section class="home-category">
 
+<div class="optionssection">
+      <div class="options">
+         
+         <div class="optionsbox">
+            <img src="images/dining.jpg" alt="">
+            <a href="category.php?category=fruits" class="btn">Make a Reservation</a>
+         </div>
+
+         <div class="optionsbox">
+            <img src="images/order.jpg" alt="">
+            <a href="category.php?category=meat" class="btn">Order Foods</a>
+         </div>
+         
+         <div class="optionsbox">
+            <img src="images/foodmenus.jpg" alt="">
+            <a href="category.php?category=meat" class="btn">Explore Menu</a>
+         </div>
+
+      </div>
+</div>
+
+   <div class="box-container">
+
+      <div class="box">
+         <img src="images/dining.jpg" alt="">
+         <a href="category.php?category=fruits" class="btn">Make a Reservation</a>
+      </div>
+
+      <div class="box">
+         <img src="images/order.jpg" alt="">
+         <a href="category.php?category=meat" class="btn">Order Foods</a>
+      </div>
+      
+      <div class="box">
+         <img src="images/foodmenus.jpg" alt="">
+         <a href="category.php?category=meat" class="btn">Explore Menu</a>
+      </div>
+
+   </div>
+
    <h1 class="title">shop by category</h1>
 
    <div class="box-container">

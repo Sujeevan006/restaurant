@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 :root {
   --green: #27ae60;
@@ -16,7 +16,7 @@
 }
 
 * {
-  font-family: "Inter", sans-serif;
+  font-family: "Poppins", sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -64,7 +64,7 @@ html {
 
 section {
   padding: 3rem 2rem;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
@@ -237,7 +237,7 @@ section {
   justify-content: space-between;
   padding: 2rem;
   margin: 0 auto;
-  max-width: 1200px;
+  max-width: 1440px;
   position: relative;
 }
 
@@ -252,7 +252,7 @@ section {
 
 .header .flex .navbar a {
   margin: 0 1rem;
-  font-size: 2rem;
+  font-size: medium;
   color: var(--light-color);
 }
 

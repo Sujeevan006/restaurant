@@ -1,81 +1,44 @@
 <?php
-
-@include 'config.php';
-
+include 'config.php'; // Include config.php to establish database connection
 session_start();
 
 $user_id = $_SESSION['user_id'];
-
 if (!isset($user_id)) {
     header('location:login.php');
+    exit();
 }
-;
+if (isset($_POST['submit'])) {
+    $name = $_POST['name'];
+    $table_number = $_POST['table'];
+    $persons = $_POST['persons'];
+    $reservationDate = $_POST['reservationDate'];
+    $reservationTime = $_POST['reservationTime'];
 
-if (isset($_POST['add_to_wishlist'])) {
+    try {
+        $checkSql = "SELECT * FROM reservation WHERE table_number = :table_number AND date = :date";
+        $checkStmt = $conn->prepare($checkSql);
+        $checkStmt->bindParam(':table_number', $table_number, PDO::PARAM_INT);
+        $checkStmt->bindParam(':date', $reservationDate, PDO::PARAM_STR);
+        $checkStmt->execute();
 
-    $pid = $_POST['pid'];
-    $pid = filter_var($pid, FILTER_SANITIZE_STRING);
-    $p_name = $_POST['p_name'];
-    $p_name = filter_var($p_name, FILTER_SANITIZE_STRING);
-    $p_price = $_POST['p_price'];
-    $p_price = filter_var($p_price, FILTER_SANITIZE_STRING);
-    $p_image = $_POST['p_image'];
-    $p_image = filter_var($p_image, FILTER_SANITIZE_STRING);
-
-    $check_wishlist_numbers = $conn->prepare("SELECT * FROM `wishlist` WHERE name = ? AND user_id = ?");
-    $check_wishlist_numbers->execute([$p_name, $user_id]);
-
-    $check_cart_numbers = $conn->prepare("SELECT * FROM `cart` WHERE name = ? AND user_id = ?");
-    $check_cart_numbers->execute([$p_name, $user_id]);
-
-    if ($check_wishlist_numbers->rowCount() > 0) {
-        $message[] = 'already added to wishlist!';
-    } elseif ($check_cart_numbers->rowCount() > 0) {
-        $message[] = 'already added to cart!';
-    } else {
-        $insert_wishlist = $conn->prepare("INSERT INTO `wishlist`(user_id, pid, name, price, image) VALUES(?,?,?,?,?)");
-        $insert_wishlist->execute([$user_id, $pid, $p_name, $p_price, $p_image]);
-        $message[] = 'added to wishlist!';
-    }
-
-}
-
-if (isset($_POST['add_to_cart'])) {
-
-    $pid = $_POST['pid'];
-    $pid = filter_var($pid, FILTER_SANITIZE_STRING);
-    $p_name = $_POST['p_name'];
-    $p_name = filter_var($p_name, FILTER_SANITIZE_STRING);
-    $p_price = $_POST['p_price'];
-    $p_price = filter_var($p_price, FILTER_SANITIZE_STRING);
-    $p_image = $_POST['p_image'];
-    $p_image = filter_var($p_image, FILTER_SANITIZE_STRING);
-    $p_qty = $_POST['p_qty'];
-    $p_qty = filter_var($p_qty, FILTER_SANITIZE_STRING);
-
-    $check_cart_numbers = $conn->prepare("SELECT * FROM `cart` WHERE name = ? AND user_id = ?");
-    $check_cart_numbers->execute([$p_name, $user_id]);
-
-    if ($check_cart_numbers->rowCount() > 0) {
-        $message[] = 'already added to cart!';
-    } else {
-
-        $check_wishlist_numbers = $conn->prepare("SELECT * FROM `wishlist` WHERE name = ? AND user_id = ?");
-        $check_wishlist_numbers->execute([$p_name, $user_id]);
-
-        if ($check_wishlist_numbers->rowCount() > 0) {
-            $delete_wishlist = $conn->prepare("DELETE FROM `wishlist` WHERE name = ? AND user_id = ?");
-            $delete_wishlist->execute([$p_name, $user_id]);
+        if ($checkStmt->rowCount() > 0) {
+        } else {
+            $sql = "INSERT INTO reservation (table_number, persons, status, reservation_time, date, name) 
+                    VALUES (:table_number, :persons, 'Pending', :reservation_time, :date, :name)";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':table_number', $table_number, PDO::PARAM_INT);
+            $stmt->bindParam(':persons', $persons, PDO::PARAM_INT);
+            $stmt->bindParam(':reservation_time', $reservationTime, PDO::PARAM_STR);
+            $stmt->bindParam(':date', $reservationDate, PDO::PARAM_STR);
+            $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+            $stmt->execute();          
         }
-
-        $insert_cart = $conn->prepare("INSERT INTO `cart`(user_id, pid, name, price, quantity, image) VALUES(?,?,?,?,?,?)");
-        $insert_cart->execute([$user_id, $pid, $p_name, $p_price, $p_qty, $p_image]);
-        $message[] = 'added to cart!';
+    } catch (PDOException $e) {
     }
-
 }
-
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -86,10 +49,8 @@ if (isset($_POST['add_to_cart'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>category</title>
 
-    <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
-    <!-- custom css file link  -->
     <link rel="stylesheet" href="css/style.css">
 
 </head>
@@ -98,49 +59,78 @@ if (isset($_POST['add_to_cart'])) {
 
     <?php include 'header.php'; ?>
 
-    <section class="products">
+    <section class="reservations">
 
-        <h1 class="title">products categories</h1>
+        <h1 class="title">Book Your Table</h1>
+        <form action="" method="POST">
+        <div>
+            <input type="text" name="name" class="box" placeholder="Enter your name" required>
+            <input type="number" id="tableNumber" name="table" class="box" placeholder="Enter table number" required>
+            <input type="number" id="numberOfPersons" name="persons" class="box" placeholder="Number of persons" min="1" required>
+            <input type="date" id="reservationDate" class="box" name="reservationDate" required>
+            <input type="time" id="reservationTime" class="box" name="reservationTime" required>
 
-        <div class="box-container">
-
-            <?php
-            $category_name = $_GET['category'];
-            $select_products = $conn->prepare("SELECT * FROM `products` WHERE category = ?");
-            $select_products->execute([$category_name]);
-            if ($select_products->rowCount() > 0) {
-                while ($fetch_products = $select_products->fetch(PDO::FETCH_ASSOC)) {
-                    ?>
-                    <form action="" class="box" method="POST">
-                        <div class="price">$<span><?= $fetch_products['price']; ?></span>/-</div>
-                        <a href="view_page.php?pid=<?= $fetch_products['id']; ?>" class="fas fa-eye"></a>
-                        <img src="uploaded_img/<?= $fetch_products['image']; ?>" alt="">
-                        <div class="name"><?= $fetch_products['name']; ?></div>
-                        <input type="hidden" name="pid" value="<?= $fetch_products['id']; ?>">
-                        <input type="hidden" name="p_name" value="<?= $fetch_products['name']; ?>">
-                        <input type="hidden" name="p_price" value="<?= $fetch_products['price']; ?>">
-                        <input type="hidden" name="p_image" value="<?= $fetch_products['image']; ?>">
-                        <input type="number" min="1" value="1" name="p_qty" class="qty">
-                        <input type="submit" value="add to wishlist" class="option-btn" name="add_to_wishlist">
-                        <input type="submit" value="add to cart" class="btn" name="add_to_cart">
-                    </form>
-                    <?php
-                }
-            } else {
-                echo '<p class="empty">no products available!</p>';
-            }
-            ?>
-
+            <input type="submit" value="Book Table" class="btn" name="submit">
+        </div>
+        <div>
+            <img src="images/tablebooking.png" alt="">
         </div>
 
+</form>
+
+<script>
+   document.getElementById("tableNumber").addEventListener("input", function() {
+    var tableNumber = parseInt(this.value);
+    var numberOfPersonsField = document.getElementById("numberOfPersons");
+
+
+    var defaultValues = {
+        1: 4,
+        2: 4,
+        3: 4,
+        4: 10,
+        5: 20,
+        6: 2,
+        7: 2,
+        8: 2,
+        9: 2
+    };
+
+    // Check if the table number is valid and set the corresponding number of persons
+    if (defaultValues.hasOwnProperty(tableNumber)) {
+        numberOfPersonsField.value = defaultValues[tableNumber];
+        numberOfPersonsField.disabled = false;
+    } else {
+        numberOfPersonsField.value = "";
+        numberOfPersonsField.placeholder = "Enter valid table number";
+        numberOfPersonsField.disabled = true;
+    }
+});
+
+// Restrict number of persons input to only allow decreasing
+document.getElementById("numberOfPersons").addEventListener("input", function() {
+    var tableNumber = parseInt(document.getElementById("tableNumber").value);
+    var defaultValues = {
+        1: 4,
+        2: 4,
+        3: 4,
+        4: 10,
+        5: 20,
+        6: 2,
+        7: 2,
+        8: 2,
+        9: 2
+    };
+
+    if (defaultValues.hasOwnProperty(tableNumber)) {
+        if (parseInt(this.value) > defaultValues[tableNumber]) {
+            this.value = defaultValues[tableNumber];
+        }
+    }
+});
+
+</script>
     </section>
-
-
-
-
-
-
-
     <?php include 'footer.php'; ?>
 
     <script src="js/script.js"></script>

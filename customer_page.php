@@ -88,6 +88,8 @@ if (isset($_POST['add_to_cart'])) {
 
    <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+   
 
    <!-- custom css file link  -->
    <link rel="stylesheet" href="css/style.css">
@@ -119,72 +121,43 @@ if (isset($_POST['add_to_cart'])) {
          <div class="options">
             <div class="optionsbox">
                <img src="images/dining.jpg" alt="">
-               <a href="reservation.php?category=fruits" class="btn">Make a Reservation</a>
+               <a href="reservation.php" class="btn">Make a Reservation</a>
             </div>
 
             <div class="optionsbox">
                <img src="images/order.jpg" alt="">
-               <a href="category.php?category=meat" class="btn">Order Foods</a>
+               <a href="order_page.php" class="btn">Order Foods</a>
             </div>
 
             <div class="optionsbox">
                <img src="images/foodmenus.jpg" alt="">
-               <a href="category.php?category=meat" class="btn">Explore Menu</a>
+               <a href="menu.php" class="btn">Explore Menu</a>
             </div>
 
          </div>
       </div>
 
-      <div class="box-container">
-
-         <div class="box">
-            <img src="images/dining.jpg" alt="">
-            <a href="category.php?category=fruits" class="btn">Make a Reservation</a>
-         </div>
-
-         <div class="box">
-            <img src="images/order.jpg" alt="">
-            <a href="category.php?category=meat" class="btn">Order Foods</a>
-         </div>
-
-         <div class="box">
-            <img src="images/foodmenus.jpg" alt="">
-            <a href="category.php?category=meat" class="btn">Explore Menu</a>
-         </div>
-
-      </div>
 
       <h1 class="title">shop by category</h1>
 
       <div class="box-container">
 
          <div class="box">
-            <img src="images/cat-1.png" alt="">
-            <h3>fruits</h3>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Exercitationem, quaerat.</p>
-            <a href="category.php?category=fruits" class="btn">fruits</a>
+            <img src="images/veg.png" alt="foods">
+            <a href="category.php?category=vegfoods" class="btn">Veg Foods</a>
          </div>
 
          <div class="box">
-            <img src="images/cat-2.png" alt="">
-            <h3>meat</h3>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Exercitationem, quaerat.</p>
-            <a href="category.php?category=meat" class="btn">meat</a>
+            <img src="images/nonveg" alt="foods">
+            <a href="category.php?category=nonvegfoods" class="btn">Non-Veg Foods</a>
          </div>
 
          <div class="box">
-            <img src="images/cat-3.png" alt="">
-            <h3>vegitables</h3>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Exercitationem, quaerat.</p>
-            <a href="category.php?category=vegitables" class="btn">vegitables</a>
+            <img src="images/drinks.png" alt="foods">
+            <a href="category.php?category=drinks" class="btn">Soft Drink</a>
          </div>
 
-         <div class="box">
-            <img src="images/cat-4.png" alt="">
-            <h3>fish</h3>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Exercitationem, quaerat.</p>
-            <a href="category.php?category=fish" class="btn">fish</a>
-         </div>
+       
 
       </div>
 
@@ -192,28 +165,45 @@ if (isset($_POST['add_to_cart'])) {
 
    <section class="products">
 
-      <h1 class="title">latest products</h1>
+   <h1 class="title">Our Delicious Menus</h1>
 
-      <div class="box-container">
+   <div class="box-container">
 
-         <?php
+   <?php
          $select_products = $conn->prepare("SELECT * FROM `products` LIMIT 6");
          $select_products->execute();
          if ($select_products->rowCount() > 0) {
             while ($fetch_products = $select_products->fetch(PDO::FETCH_ASSOC)) {
                ?>
                <form action="" class="box" method="POST">
-                  <div class="price">$<span><?= $fetch_products['price']; ?></span>/-</div>
-                  <a href="view_page.php?pid=<?= $fetch_products['id']; ?>" class="fas fa-eye"></a>
-                  <img src="uploaded_img/<?= $fetch_products['image']; ?>" alt="">
+                  <a href="view_page.php?pid=<?= $fetch_products['id']; ?>">
+                     <img src="uploaded_img/<?= $fetch_products['image']; ?>" alt="">
+                  </a>
+   
                   <div class="name"><?= $fetch_products['name']; ?></div>
                   <input type="hidden" name="pid" value="<?= $fetch_products['id']; ?>">
                   <input type="hidden" name="p_name" value="<?= $fetch_products['name']; ?>">
+                  <div class="price">Rs<span><?= $fetch_products['price']; ?></span>/-</div>
+   
                   <input type="hidden" name="p_price" value="<?= $fetch_products['price']; ?>">
                   <input type="hidden" name="p_image" value="<?= $fetch_products['image']; ?>">
-                  <input type="number" min="1" value="1" name="p_qty" class="qty">
-                  <input type="submit" value="add to wishlist" class="option-btn" name="add_to_wishlist">
-                  <input type="submit" value="add to cart" class="btn" name="add_to_cart">
+   
+   
+                  <div class="cartlist">
+                     <button type="submit" name="add_to_wishlist" class="iconbox">
+                        <i class="material-icons">favorite</i>
+                     </button>
+   
+                     <div>
+                        <input type="number" min="1" value="1" name="p_qty" class="qty">
+                     </div>
+   
+                     <button type="submit" name="add_to_cart" class="iconbox">
+                        <i class="material-icons">shopping_cart</i>
+                     </button>
+                  </div>
+   
+   
                </form>
                <?php
             }
@@ -221,10 +211,15 @@ if (isset($_POST['add_to_cart'])) {
             echo '<p class="empty">no products added yet!</p>';
          }
          ?>
-
+   
       </div>
-
+   
+      <section class="p-category">
+         <a href="shop.php">MORE</a>
+      </section>
+   
    </section>
+
 
 
 

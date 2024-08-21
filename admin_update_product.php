@@ -91,11 +91,10 @@ if(isset($_POST['update_product'])){
       <input type="text" name="name" placeholder="enter product name" required class="box" value="<?= $fetch_products['name']; ?>">
       <input type="number" name="price" min="0" placeholder="enter product price" required class="box" value="<?= $fetch_products['price']; ?>">
       <select name="category" class="box" required>
-         <option selected><?= $fetch_products['category']; ?></option>
-         <option value="vegitables">vegitables</option>
-         <option value="fruits">fruits</option>
-         <option value="meat">meat</option>
-         <option value="fish">fish</option>
+        <option value="" selected disabled>select category</option>
+                  <option value="vegfoods">Veg Foods</option>
+                  <option value="nonvegfoods">Non-Veg Foods</option>
+                  <option value="drinks">Drinks</option>
       </select>
       <textarea name="details" required placeholder="enter product details" class="box" cols="30" rows="10"><?= $fetch_products['details']; ?></textarea>
       <input type="file" name="image" class="box" accept="image/jpg, image/jpeg, image/png">

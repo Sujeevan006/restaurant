@@ -6,11 +6,12 @@ session_start();
 
 $admin_id = $_SESSION['admin_id'];
 
-if(!isset($admin_id)){
+if (!isset($admin_id)) {
    header('location:login.php');
-};
+}
+;
 
-if(isset($_GET['delete'])){
+if (isset($_GET['delete'])) {
 
    $delete_id = $_GET['delete'];
    $delete_users = $conn->prepare("DELETE FROM `users` WHERE id = ?");
@@ -23,6 +24,7 @@ if(isset($_GET['delete'])){
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -36,49 +38,48 @@ if(isset($_GET['delete'])){
    <link rel="stylesheet" href="css/admin_style.css">
 
 </head>
+
 <body>
-   
-<?php include 'admin_header.php'; ?>
 
-<section class="user-accounts">
+   <?php include 'admin_header.php'; ?>
 
-   <h1 class="title">user accounts</h1>
+   <section class="user-accounts">
 
-   <div class="box-container">
+      <h1 class="title">user accounts</h1>
 
-      <?php
+      <div class="box-container">
+
+         <?php
          $select_users = $conn->prepare("SELECT * FROM `users`");
          $select_users->execute();
-         while($fetch_users = $select_users->fetch(PDO::FETCH_ASSOC)){
-      ?>
-      <div class="box" style="<?php if($fetch_users['id'] == $admin_id){ echo 'display:none'; }; ?>">
-         <img src="uploaded_img/<?= $fetch_users['image']; ?>" alt="">
-         <p> user id : <span><?= $fetch_users['id']; ?></span></p>
-         <p> username : <span><?= $fetch_users['name']; ?></span></p>
-         <p> email : <span><?= $fetch_users['email']; ?></span></p>
-         <p> user type : <span style=" color:<?php if($fetch_users['usertype'] == 'admin'){ echo 'orange'; }; ?>"><?= $fetch_users['usertype']; ?></span></p>
-         <a href="admin_users.php?delete=<?= $fetch_users['id']; ?>" onclick="return confirm('delete this user?');" class="delete-btn">delete</a>
+         while ($fetch_users = $select_users->fetch(PDO::FETCH_ASSOC)) {
+            ?>
+            <div class="box" style="<?php if ($fetch_users['id'] == $admin_id) {
+               echo 'display:none';
+            }
+            ; ?>">
+               <img src="uploaded_img/<?= $fetch_users['image']; ?>" alt="">
+               <p> user id : <span><?= $fetch_users['id']; ?></span></p>
+               <p> username : <span><?= $fetch_users['name']; ?></span></p>
+               <p> email : <span><?= $fetch_users['email']; ?></span></p>
+               <p> user type : <span style=" color:<?php if ($fetch_users['usertype'] == 'admin') {
+                  echo 'orange';
+               }
+               ; ?>"><?= $fetch_users['usertype']; ?></span>
+               </p>
+               <a href="admin_users.php?delete=<?= $fetch_users['id']; ?>" onclick="return confirm('delete this user?');"
+                  class="delete-btn">delete</a>
+            </div>
+            <?php
+         }
+         ?>
       </div>
-      <?php
-      }
-      ?>
-   </div>
 
-</section>
+   </section>
 
 
-
-
-
-
-
-
-
-
-
-
-
-<script src="js/script.js"></script>
+   <script src="js/script.js"></script>
 
 </body>
+
 </html>

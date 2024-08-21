@@ -91,15 +91,7 @@
    position: relative;
 }
 
-.show-products .box-container .box .price{
-   position: absolute;
-   top:1rem; left:1rem;
-   padding:1rem;
-   font-size: 2rem;
-   color:var(--white);
-   background-color: var(--red);
-   border-radius: .5rem;
-}
+
 
 .show-products .box-container .box img{
    width: 100%;

@@ -95,14 +95,26 @@ if(isset($_POST['add_to_cart'])){
    
 <?php include 'header.php'; ?>
 
-<section class="p-category">
 
-   <a href="category.php?category=fruits">fruits</a>
-   <a href="category.php?category=vegitables">vegitables</a>
-   <a href="category.php?category=fish">fish</a>
-   <a href="category.php?category=meat">meat</a>
+   <section class="home-category">
+       <div class="box-container">
+         <div class="box">
+            <img src="images/veg.png" alt="foods">
+            <a href="category.php?category=vegfoods" class="btn">Veg Foods</a>
+         </div>
 
-</section>
+         <div class="box">
+            <img src="images/nonveg" alt="foods">
+            <a href="category.php?category=nonvegfoods" class="btn">Non-Veg Foods</a>
+         </div>
+
+         <div class="box">
+            <img src="images/drinks.png" alt="foods">
+            <a href="category.php?category=drinks" class="btn">Soft Drink</a>
+         </div>
+      </div>
+   <section class="home-category">
+
 
 <section class="products">
 

@@ -1,6 +1,5 @@
 @import url("components.css");
 
-
 .home-bg {
   background: url(../images/bg4.jpg) no-repeat;
   background-size: cover;
@@ -143,7 +142,6 @@
   position: relative;
 }
 
-
 .products .box-container .box .fa-eye {
   position: absolute;
   top: 1rem;
@@ -173,8 +171,6 @@
   color: var(--black);
   padding: 1rem 0;
 }
-
-
 
 .quick-view .box {
   max-width: 50rem;
@@ -778,11 +774,6 @@
   }
 }
 
-
-
-
-
-
 .reservations form {
   margin: 0 auto;
   max-width: 100rem;
@@ -813,10 +804,10 @@
   resize: none;
 }
 
-.iconbox{
+.iconbox {
   background-color: white;
 }
-.cartlist{
+.cartlist {
   display: flex;
   gap: 1rem;
   align-items: center;
@@ -838,7 +829,6 @@
   width: 80%;
 }
 
-
 .products .box-container .box .price {
   position: relative;
   top: 0rem;
@@ -856,7 +846,6 @@
   margin: 0 0.2rem;
 }
 
-
 .quick-view .box-container .box .price {
   position: relative;
   top: 0rem;
@@ -873,4 +862,14 @@
   font-size: 2.5rem;
   color: var(--black);
   margin: 0 0.2rem;
+}
+
+.gallerybox {
+  width: 100px;
+  height: 100px;
+}
+
+.gallerybox .gallery {
+  width: 100px;
+  height: 100px;
 }

@@ -134,6 +134,8 @@ if (isset($_POST['add_to_cart'])) {
                <a href="menu.php" class="btn">Explore Menu</a>
             </div>
 
+            
+
          </div>
       </div>
 

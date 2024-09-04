@@ -34,7 +34,7 @@ if(!isset($user_id)){
 <section class="about">
    <div class="row">
         <div class="box">
-         <h3>About Us</h3>
+         <h3>why choose us?</h3>
          <img src="images/aboutimg.jpg" alt="">        
          <p>ABC Restaurant is a beloved Sri Lankan restaurant chain known for its delicious cuisine and warm hospitality. With locations across the country, we offer a taste of authentic Sri Lankan flavors in every bite. Whether you're a local or a visitor, come experience the vibrant atmosphere and unforgettable dining experience at ABC Restaurant.</p>     
       </div>

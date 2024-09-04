@@ -48,18 +48,19 @@ class User {
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC); // OOP: Fetching the result set
 
-        if ($rowCount > 0) {
-            // OOP: Polymorphism - Handling different user types dynamically
-            if ($row['usertype'] == 'Admin') {
-                $_SESSION['admin_id'] = $row['id']; // OOP: State management using session
-                header('location:admin_page.php');
-            } elseif ($row['usertype'] == 'Staff') {
-                $_SESSION['user_id'] = $row['id']; // OOP: State management using session
-                header('location:staff_page.php');
-            } elseif ($row['user_type'] == 'Customer') {
-                $_SESSION['user_id'] = $row['id']; // OOP: State management using session
-                header('location:customer_page.php');
-            }
+         if ($rowCount > 0) {
+         // Check user type
+         if ($row['usertype'] == 'Admin') {
+            $_SESSION['admin_id'] = $row['id']; // For admin
+            header('location:admin_page.php');
+         } elseif ($row['usertype'] == 'Staff') {
+            $_SESSION['staff_id'] = $row['id']; // Use 'staff_id' for staff
+            header('location:staff_page.php');
+         } elseif ($row['usertype'] == 'Customer') {
+            $_SESSION['user_id'] = $row['id']; // For customer
+            header('location:customer_page.php');
+         }
+         
         } else {
             return 'Incorrect email, password, or user type!'; // OOP: Encapsulation - Returning error message
         }

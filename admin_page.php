@@ -33,7 +33,7 @@ if(!isset($admin_id)){
 
 <section class="dashboard">
 
-   <h1 class="title">dashboard</h1>
+   <h1 class="title">Admin Dashboard</h1>
 
    <div class="box-container">
 

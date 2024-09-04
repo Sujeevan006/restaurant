@@ -56,7 +56,7 @@ class User {
             } elseif ($row['usertype'] == 'Staff') {
                 $_SESSION['user_id'] = $row['id']; // OOP: State management using session
                 header('location:staff_page.php');
-            } elseif ($row['usertype'] == 'Customer') {
+            } elseif ($row['user_type'] == 'Customer') {
                 $_SESSION['user_id'] = $row['id']; // OOP: State management using session
                 header('location:customer_page.php');
             }

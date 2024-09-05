@@ -873,3 +873,17 @@
   width: 100px;
   height: 100px;
 }
+
+.message {
+  background-color: #4caf50;
+  color: white;
+  padding: 15px;
+  text-align: center;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  width: 10%;
+}
+
+.message.error {
+  background-color: #f44336; /* Red for error messages */
+}

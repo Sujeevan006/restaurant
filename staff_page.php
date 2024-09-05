@@ -4,127 +4,150 @@
 
 session_start();
 
-$user_id = $_SESSION['user_id'];
+$admin_id = $_SESSION['admin_id'];
 
-if (!isset($user_id)) {
+if(!isset($admin_id)){
    header('location:login.php');
-}
-;
-
-if (isset($_POST['add_to_wishlist'])) {
-
-   $pid = $_POST['pid'];
-   $pid = filter_var($pid, FILTER_SANITIZE_STRING);
-   $p_name = $_POST['p_name'];
-   $p_name = filter_var($p_name, FILTER_SANITIZE_STRING);
-   $p_price = $_POST['p_price'];
-   $p_price = filter_var($p_price, FILTER_SANITIZE_STRING);
-   $p_image = $_POST['p_image'];
-   $p_image = filter_var($p_image, FILTER_SANITIZE_STRING);
-
-   $check_wishlist_numbers = $conn->prepare("SELECT * FROM `wishlist` WHERE name = ? AND user_id = ?");
-   $check_wishlist_numbers->execute([$p_name, $user_id]);
-
-   $check_cart_numbers = $conn->prepare("SELECT * FROM `cart` WHERE name = ? AND user_id = ?");
-   $check_cart_numbers->execute([$p_name, $user_id]);
-
-   if ($check_wishlist_numbers->rowCount() > 0) {
-      $message[] = 'already added to wishlist!';
-   } elseif ($check_cart_numbers->rowCount() > 0) {
-      $message[] = 'already added to cart!';
-   } else {
-      $insert_wishlist = $conn->prepare("INSERT INTO `wishlist`(user_id, pid, name, price, image) VALUES(?,?,?,?,?)");
-      $insert_wishlist->execute([$user_id, $pid, $p_name, $p_price, $p_image]);
-      $message[] = 'added to wishlist!';
-   }
-
-}
-
-if (isset($_POST['add_to_cart'])) {
-
-   $pid = $_POST['pid'];
-   $pid = filter_var($pid, FILTER_SANITIZE_STRING);
-   $p_name = $_POST['p_name'];
-   $p_name = filter_var($p_name, FILTER_SANITIZE_STRING);
-   $p_price = $_POST['p_price'];
-   $p_price = filter_var($p_price, FILTER_SANITIZE_STRING);
-   $p_image = $_POST['p_image'];
-   $p_image = filter_var($p_image, FILTER_SANITIZE_STRING);
-   $p_qty = $_POST['p_qty'];
-   $p_qty = filter_var($p_qty, FILTER_SANITIZE_STRING);
-
-   $check_cart_numbers = $conn->prepare("SELECT * FROM `cart` WHERE name = ? AND user_id = ?");
-   $check_cart_numbers->execute([$p_name, $user_id]);
-
-   if ($check_cart_numbers->rowCount() > 0) {
-      $message[] = 'already added to cart!';
-   } else {
-
-      $check_wishlist_numbers = $conn->prepare("SELECT * FROM `wishlist` WHERE name = ? AND user_id = ?");
-      $check_wishlist_numbers->execute([$p_name, $user_id]);
-
-      if ($check_wishlist_numbers->rowCount() > 0) {
-         $delete_wishlist = $conn->prepare("DELETE FROM `wishlist` WHERE name = ? AND user_id = ?");
-         $delete_wishlist->execute([$p_name, $user_id]);
-      }
-
-      $insert_cart = $conn->prepare("INSERT INTO `cart`(user_id, pid, name, price, quantity, image) VALUES(?,?,?,?,?,?)");
-      $insert_cart->execute([$user_id, $pid, $p_name, $p_price, $p_qty, $p_image]);
-      $message[] = 'added to cart!';
-   }
-
 }
 
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>home page</title>
+   <title>admin page</title>
 
    <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
    <!-- custom css file link  -->
-   <link rel="stylesheet" href="css/style.css">
+   <link rel="stylesheet" href="css/admin_style.css">
 
 </head>
-
 <body>
+   
+<?php include 'staff_header.php'; ?>
 
-   <?php include 'header.php'; ?>
+<section class="dashboard">
 
-   <div class="home-bg">
+   <h1 class="title">Staffs Dashboard</h1>
 
-      <section class="home">
+   <div class="box-container">
 
-         <div class="content">
-            <span>Staff Staff Staff Staff Staff</span>
-            <h3>Reach For A Healthier You With Organic Foods</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto natus culpa officia quasi, accusantium
-               explicabo?</p>
-            <a href="about.php" class="btn">about us</a>
-         </div>
+      <div class="box">
+      <?php
+         $total_pendings = 0;
+         $select_pendings = $conn->prepare("SELECT * FROM `orders` WHERE payment_status = ?");
+         $select_pendings->execute(['pending']);
+         while($fetch_pendings = $select_pendings->fetch(PDO::FETCH_ASSOC)){
+            $total_pendings += $fetch_pendings['total_price'];
+         };
+      ?>
+      <h3>$<?= $total_pendings; ?>/-</h3>
+      <p>total pendings</p>
+      <a href="admin_orders.php" class="btn">see orders</a>
+      </div>
 
-      </section>
+      <div class="box">
+      <?php
+         $total_completed = 0;
+         $select_completed = $conn->prepare("SELECT * FROM `orders` WHERE payment_status = ?");
+         $select_completed->execute(['completed']);
+         while($fetch_completed = $select_completed->fetch(PDO::FETCH_ASSOC)){
+            $total_completed += $fetch_completed['total_price'];
+         };
+      ?>
+      <h3>$<?= $total_completed; ?>/-</h3>
+      <p>completed orders</p>
+      <a href="admin_orders.php" class="btn">see orders</a>
+      </div>
+
+      <div class="box">
+      <?php
+         $select_orders = $conn->prepare("SELECT * FROM `orders`");
+         $select_orders->execute();
+         $number_of_orders = $select_orders->rowCount();
+      ?>
+      <h3><?= $number_of_orders; ?></h3>
+      <p>orders placed</p>
+      <a href="admin_orders.php" class="btn">see orders</a>
+      </div>
+
+      <div class="box">
+      <?php
+         $select_products = $conn->prepare("SELECT * FROM `products`");
+         $select_products->execute();
+         $number_of_products = $select_products->rowCount();
+      ?>
+      <h3><?= $number_of_products; ?></h3>
+      <p>products added</p>
+      <a href="admin_products.php" class="btn">see products</a>
+      </div>
+
+      <div class="box">
+      <?php
+         $select_users = $conn->prepare("SELECT * FROM `users` WHERE usertype = ?");
+         $select_users->execute(['user']);
+         $number_of_users = $select_users->rowCount();
+      ?>
+      <h3><?= $number_of_users; ?></h3>
+      <p>total users</p>
+      <a href="admin_users.php" class="btn">see accounts</a>
+      </div>
+
+      <div class="box">
+      <?php
+         $select_admins = $conn->prepare("SELECT * FROM `users` WHERE usertype = ?");
+         $select_admins->execute(['admin']);
+         $number_of_admins = $select_admins->rowCount();
+      ?>
+      <h3><?= $number_of_admins; ?></h3>
+      <p>total admins</p>
+      <a href="admin_users.php" class="btn">see accounts</a>
+      </div>
+
+      <div class="box">
+      <?php
+         $select_accounts = $conn->prepare("SELECT * FROM `users`");
+         $select_accounts->execute();
+         $number_of_accounts = $select_accounts->rowCount();
+      ?>
+      <h3><?= $number_of_accounts; ?></h3>
+      <p>total accounts</p>
+      <a href="admin_users.php" class="btn">see accounts</a>
+      </div>
+
+      <div class="box">
+      <?php
+         $select_messages = $conn->prepare("SELECT * FROM `message`");
+         $select_messages->execute();
+         $number_of_messages = $select_messages->rowCount();
+      ?>
+      <h3><?= $number_of_messages; ?></h3>
+      <p>total messages</p>
+      <a href="admin_contacts.php" class="btn">see messages</a>
+      </div>
 
    </div>
 
-   <section class="home-category">
-
-      <h1 class="title">Staffs Page</h1>
-
-   </section>
+</section>
 
 
-   <?php include 'footer.php'; ?>
 
-   <script src="js/script.js"></script>
+
+
+
+
+
+
+
+
+
+
+<script src="js/script.js"></script>
 
 </body>
-
 </html>

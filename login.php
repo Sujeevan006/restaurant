@@ -2,12 +2,12 @@
 
 <?php
 
-@include 'config.php';
+include_once 'config.php';
 
 session_start();
 
 // OOP: Class Definition for Database connection
-class Database {
+class Res_Database {
     private $host = "localhost"; // OOP: Encapsulated property for host
     private $dbname = "restaurant"; // OOP: Encapsulated property for database name
     private $username = "root"; // OOP: Encapsulated property for database username
@@ -69,7 +69,7 @@ class User {
 }
 
 // OOP: Creating Instances (Objects) of Classes
-$dbInstance = new Database(); // OOP: Object Instantiation for Database
+$dbInstance = new Res_Database(); // OOP: Object Instantiation for Database
 $user = new User($dbInstance->conn); // OOP: Object Instantiation for User with Dependency Injection
 
 // Process the login form submission

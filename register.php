@@ -3,7 +3,7 @@
 include 'config.php';
 
 // OOP: Class Definition for Database Connection
-class Database {
+class Res_Database {
     private $host = "localhost";
     private $dbname = "restaurant";
     private $username = "root";

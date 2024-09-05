@@ -67,51 +67,35 @@ if (isset($_POST['add_to_cart'])) {
          $delete_wishlist = $conn->prepare("DELETE FROM `wishlist` WHERE name = ? AND user_id = ?");
          $delete_wishlist->execute([$p_name, $user_id]);
       }
-
+      
       $insert_cart = $conn->prepare("INSERT INTO `cart`(user_id, pid, name, price, quantity, image) VALUES(?,?,?,?,?,?)");
       $insert_cart->execute([$user_id, $pid, $p_name, $p_price, $p_qty, $p_image]);
       $message[] = 'added to cart!';
    }
-
 }
-
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Orders page</title>
-
-   <!-- font awesome cdn link  -->
+   <title>Orders page</title> 
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-   
-   <!-- custom css file link  -->
    <link rel="stylesheet" href="css/style.css">
-
 </head>
 
 <body>
-
    <?php include 'header.php'; ?>
-
    <section class="search-form">
-
       <form action="" method="POST">
          <input type="text" class="box" name="search_box" placeholder="search products...">
          <input type="submit" name="search_btn" value="search" class="btn">
       </form>
-
    </section>
-
    <?php
-
-
-
    ?>
 
    <section class="products" style="padding-top: 0; min-height:100vh;">
@@ -138,14 +122,11 @@ if (isset($_POST['add_to_cart'])) {
                      <div class="price">Rs<span><?= $fetch_products['price']; ?></span>/-</div>
                   
                      <input type="hidden" name="p_price" value="<?= $fetch_products['price']; ?>">
-                     <input type="hidden" name="p_image" value="<?= $fetch_products['image']; ?>">
-                  
-                  
+                     <input type="hidden" name="p_image" value="<?= $fetch_products['image']; ?>">                 
                      <div class="cartlist">
                         <button type="submit" name="add_to_wishlist" class="iconbox">
                            <i class="material-icons">favorite</i>
                         </button>
-                  
                         <div>
                            <input type="number" min="1" value="1" name="p_qty" class="qty">
                         </div>
@@ -154,8 +135,6 @@ if (isset($_POST['add_to_cart'])) {
                            <i class="material-icons">shopping_cart</i>
                         </button>
                      </div>
-                  
-                  
                   </form>
                   <?php
                }
@@ -195,8 +174,7 @@ if (isset($_POST['add_to_cart'])) {
             
                            <input type="hidden" name="p_price" value="<?= $fetch_products['price']; ?>">
                            <input type="hidden" name="p_image" value="<?= $fetch_products['image']; ?>">
-            
-            
+                        
                            <div class="cartlist">
                               <button type="submit" name="add_to_wishlist" class="iconbox">
                                  <i class="material-icons">favorite</i>
@@ -209,43 +187,26 @@ if (isset($_POST['add_to_cart'])) {
                               <button type="submit" name="add_to_cart" class="iconbox">
                                  <i class="material-icons">shopping_cart</i>
                               </button>
-                           </div>
-            
-            
+                           </div>  
                         </form>
                         <?php
                      }
                   } else {
                      echo '<p class="empty">no products added yet!</p>';
                   }
-                  ?>
-            
-               </div>
-            
+                  ?>         
+               </div>        
                <section class="p-category">
                   <a href="shop.php">MORE</a>
-               </section>
-            
+               </section>     
             </section>
-
-
    </section>
 
 
-
-
-
-
-
-
    <?php include 'footer.php'; ?>
-
    <script src="js/script.js"></script>
-
 </body>
-
 </html>
-
 
   <form action="" class="box" method="POST">
    <div class="price">$<span><?= $fetch_products['price']; ?></span>/-</div>

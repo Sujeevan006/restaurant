@@ -1,5 +1,5 @@
 <?php
-include 'config.php'; // Include config.php to establish database connection
+include 'config.php'; 
 session_start();
 
 $staff_id = $_SESSION['staff_id'];
@@ -11,7 +11,6 @@ if (!isset($staff_id)) {
 if (isset($_GET['id'])) {
     $reservation_id = $_GET['id'];
 
-    // Fetch the reservation details
     try {
         $sql = "SELECT * FROM reservation WHERE id = :id";
         $stmt = $conn->prepare($sql);
@@ -36,7 +35,6 @@ if (isset($_GET['id'])) {
         $time = $_POST['time'];
         $status = $_POST['status'];
 
-        // Update reservation details
         try {
             $sql = "UPDATE reservation SET name = :name, table_number = :table_number, persons = :persons, date = :date, reservation_time = :time, status = :status WHERE id = :id";
             $stmt = $conn->prepare($sql);

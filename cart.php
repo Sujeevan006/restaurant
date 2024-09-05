@@ -1,9 +1,7 @@
 <?php
 
 @include 'config.php';
-
 session_start();
-
 $user_id = $_SESSION['user_id'];
 
 if(!isset($user_id)){
@@ -41,24 +39,16 @@ if(isset($_POST['update_qty'])){
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>shopping cart</title>
-
-   <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-
-   <!-- custom css file link  -->
    <link rel="stylesheet" href="css/style.css">
 
 </head>
 <body>
    
 <?php include 'header.php'; ?>
-
 <section class="shopping-cart">
-
    <h1 class="title">products added</h1>
-
    <div class="box-container">
-
    <?php
       $grand_total = 0;
       $select_cart = $conn->prepare("SELECT * FROM `cart` WHERE user_id = ?");
@@ -87,26 +77,16 @@ if(isset($_POST['update_qty'])){
    }
    ?>
    </div>
-
    <div class="cart-total">
       <p>grand total : <span>$<?= $grand_total; ?>/-</span></p>
       <a href="shop.php" class="option-btn">continue shopping</a>
       <a href="cart.php?delete_all" class="delete-btn <?= ($grand_total > 1)?'':'disabled'; ?>">delete all</a>
       <a href="checkout.php" class="btn <?= ($grand_total > 1)?'':'disabled'; ?>">proceed to checkout</a>
    </div>
-
 </section>
 
 
-
-
-
-
-
-
 <?php include 'footer.php'; ?>
-
 <script src="js/script.js"></script>
-
 </body>
 </html>

@@ -1,5 +1,5 @@
 <?php
-include 'config.php'; // Include config.php to establish database connection
+include 'config.php'; 
 session_start();
 
 $user_id = $_SESSION['user_id'];
@@ -68,11 +68,10 @@ if (isset($_POST['submit'])) {
     <section class="reservations">
         <h1 class="title">Book Your Table</h1>
 
-        <!-- Display success or error message -->
         <?php
         if (isset($_SESSION['message'])) {
             echo '<div class="message">' . $_SESSION['message'] . '</div>';
-            unset($_SESSION['message']); // Unset the message after displaying it
+            unset($_SESSION['message']);
         }
         ?>
 
@@ -108,7 +107,6 @@ if (isset($_POST['submit'])) {
                     9: 2
                 };
 
-                // Check if the table number is valid and set the corresponding number of persons
                 if (defaultValues.hasOwnProperty(tableNumber)) {
                     numberOfPersonsField.value = defaultValues[tableNumber];
                     numberOfPersonsField.disabled = false;
@@ -119,7 +117,6 @@ if (isset($_POST['submit'])) {
                 }
             });
 
-            // Restrict number of persons input to only allow decreasing
             document.getElementById("numberOfPersons").addEventListener("input", function() {
                 var tableNumber = parseInt(document.getElementById("tableNumber").value);
                 var defaultValues = {

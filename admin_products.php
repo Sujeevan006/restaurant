@@ -82,10 +82,10 @@ if (isset($_GET['delete'])) {
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>products</title>
 
-   <!-- font awesome cdn link  -->
+   
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
-   <!-- custom css file link  -->
+  
    <link rel="stylesheet" href="css/admin_style.css">
 
 </head>
@@ -95,9 +95,7 @@ if (isset($_GET['delete'])) {
    <?php include 'admin_header.php'; ?>
 
    <section class="add-products">
-
       <h1 class="title">add new product</h1>
-
       <form action="" method="POST" enctype="multipart/form-data">
          <div class="flex">
             <div class="inputBox">
@@ -118,15 +116,11 @@ if (isset($_GET['delete'])) {
             rows="10"></textarea>
          <input type="submit" class="btn" value="add product" name="add_product">
       </form>
-
    </section>
 
    <section class="show-products">
-
       <h1 class="title">products added</h1>
-
       <div class="box-container">
-
          <?php
          $show_products = $conn->prepare("SELECT * FROM `products`");
          $show_products->execute();
@@ -151,23 +145,9 @@ if (isset($_GET['delete'])) {
             echo '<p class="empty">now products added yet!</p>';
          }
          ?>
-
       </div>
-
    </section>
 
-
-
-
-
-
-
-
-
-
-
    <script src="js/script.js"></script>
-
 </body>
-
 </html>

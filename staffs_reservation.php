@@ -1,15 +1,13 @@
 <?php
-include 'config.php'; // Include config.php to establish database connection
+include 'config.php'; 
 session_start();
 
-// Check if the user is logged in as staff (implement a check based on user role)
 $staff_id = $_SESSION['staff_id'];
 if (!isset($staff_id)) {
     header('location:staff_login.php');
     exit();
 }
 
-// Fetch all reservations from the database
 try {
     $sql = "SELECT * FROM reservation ORDER BY date DESC, reservation_time DESC";
     $stmt = $conn->prepare($sql);

@@ -85,38 +85,27 @@ if (isset($_POST['add_to_cart'])) {
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>home page</title>
-
-   <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-   
-
-   <!-- custom css file link  -->
+   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
    <link rel="stylesheet" href="css/style.css">
-
 </head>
 
 <body>
-
    <?php include 'header.php'; ?>
 
    <div class="home-bg">
-
       <section class="home">
-
          <div class="content">
             <h3>ABC Restaurant</h3>
             <p>Welcome to ABC Restaurant, your destination for delicious meals and a warm atmosphere. Explore our menu,
                make a reservation, or order for delivery-experience the best with us</p>
             <a href="about.php" class="btn">about us</a>
          </div>
-
       </section>
-
    </div>
 
-   <section class="home-category">
 
+   <section class="home-category">
       <div class="optionssection">
          <div class="options">
             <div class="optionsbox">
@@ -133,17 +122,11 @@ if (isset($_POST['add_to_cart'])) {
                <img src="images/foodmenus.jpg" alt="">
                <a href="menu.php" class="btn">Explore Menu</a>
             </div>
-
-            
-
          </div>
       </div>
 
-
       <h1 class="title">shop by category</h1>
-
       <div class="box-container">
-
          <div class="box">
             <img src="images/veg.png" alt="foods">
             <a href="category.php?category=vegfoods" class="btn">Veg Foods</a>
@@ -158,19 +141,12 @@ if (isset($_POST['add_to_cart'])) {
             <img src="images/drinks.png" alt="foods">
             <a href="category.php?category=drinks" class="btn">Soft Drink</a>
          </div>
-
-       
-
       </div>
 
    </section>
-
    <section class="products">
-
    <h1 class="title">Our Delicious Menus</h1>
-
    <div class="box-container">
-
    <?php
          $select_products = $conn->prepare("SELECT * FROM `products` LIMIT 6");
          $select_products->execute();
@@ -190,12 +166,11 @@ if (isset($_POST['add_to_cart'])) {
                   <input type="hidden" name="p_price" value="<?= $fetch_products['price']; ?>">
                   <input type="hidden" name="p_image" value="<?= $fetch_products['image']; ?>">
    
-   
                   <div class="cartlist">
                      <button type="submit" name="add_to_wishlist" class="iconbox">
                         <i class="material-icons">favorite</i>
                      </button>
-   
+
                      <div>
                         <input type="number" min="1" value="1" name="p_qty" class="qty">
                      </div>
@@ -204,8 +179,6 @@ if (isset($_POST['add_to_cart'])) {
                         <i class="material-icons">shopping_cart</i>
                      </button>
                   </div>
-   
-   
                </form>
                <?php
             }
@@ -213,26 +186,16 @@ if (isset($_POST['add_to_cart'])) {
             echo '<p class="empty">no products added yet!</p>';
          }
          ?>
-   
       </div>
-   
       <section class="p-category">
          <a href="shop.php">MORE</a>
       </section>
-   
    </section>
 
 
 
 
-
-
-
-
    <?php include 'footer.php'; ?>
-
    <script src="js/script.js"></script>
-
 </body>
-
 </html>

@@ -1,18 +1,12 @@
 <?php
-
 @include 'config.php';
-
 session_start();
-
 $user_id = $_SESSION['user_id'];
-
 if (!isset($user_id)) {
     header('location:login.php');
 }
 ;
-
 if (isset($_POST['add_to_wishlist'])) {
-
     $pid = $_POST['pid'];
     $pid = filter_var($pid, FILTER_SANITIZE_STRING);
     $p_name = $_POST['p_name'];
@@ -37,11 +31,9 @@ if (isset($_POST['add_to_wishlist'])) {
         $insert_wishlist->execute([$user_id, $pid, $p_name, $p_price, $p_image]);
         $message[] = 'added to wishlist!';
     }
-
 }
 
 if (isset($_POST['add_to_cart'])) {
-
     $pid = $_POST['pid'];
     $pid = filter_var($pid, FILTER_SANITIZE_STRING);
     $p_name = $_POST['p_name'];
@@ -67,44 +59,31 @@ if (isset($_POST['add_to_cart'])) {
             $delete_wishlist = $conn->prepare("DELETE FROM `wishlist` WHERE name = ? AND user_id = ?");
             $delete_wishlist->execute([$p_name, $user_id]);
         }
-
         $insert_cart = $conn->prepare("INSERT INTO `cart`(user_id, pid, name, price, quantity, image) VALUES(?,?,?,?,?,?)");
         $insert_cart->execute([$user_id, $pid, $p_name, $p_price, $p_qty, $p_image]);
         $message[] = 'added to cart!';
     }
-
 }
-
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>quick view</title>
-
-    <!-- font awesome cdn link  -->
+  
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <!-- custom css file link  -->
-    <link rel="stylesheet" href="css/style.css">
-
-</head>
-
-<body>
-
-    <?php include 'header.php'; ?>
-
    
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <?php include 'header.php'; ?>
+ 
 <section class="products">
-
    <h1 class="title">Our Delicious Menus</h1>
-
    <div class="box-container">
-
    <?php
         $select_products = $conn->prepare("SELECT * FROM `products` LIMIT 6");
         $select_products->execute();
@@ -123,8 +102,7 @@ if (isset($_POST['add_to_cart'])) {
 
                     <input type="hidden" name="p_price" value="<?= $fetch_products['price']; ?>">
                     <input type="hidden" name="p_image" value="<?= $fetch_products['image']; ?>">
-              
-
+    
                     <div class="cartlist">
                         <button type="submit" name="add_to_wishlist" class="iconbox">
                             <i class="material-icons">favorite</i>
@@ -138,8 +116,6 @@ if (isset($_POST['add_to_cart'])) {
                             <i class="material-icons">shopping_cart</i>
                         </button>
                     </div>
-    
-                 
                 </form>
                 <?php
             }
@@ -147,26 +123,15 @@ if (isset($_POST['add_to_cart'])) {
             echo '<p class="empty">no products added yet!</p>';
         }
         ?>
-
     </div>
-
     <section class="p-category">
         <a href="shop.php">MORE</a>
     </section>
-
 </section>
 
 
 
-
-
-
-
-
     <?php include 'footer.php'; ?>
-
     <script src="js/script.js"></script>
-
 </body>
-
 </html>

@@ -1,5 +1,4 @@
 <?php
-
 class Database {
     private static $instance = null;
     private $conn;
@@ -26,8 +25,6 @@ class Database {
     }
 }
 ?>
-
-
 <?php
 include_once 'config.php';
 $db = Database::getInstance();

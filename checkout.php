@@ -11,7 +11,6 @@ if(!isset($user_id)){
 };
 
 if(isset($_POST['order'])){
-
    $name = $_POST['name'];
    $name = filter_var($name, FILTER_SANITIZE_STRING);
    $number = $_POST['number'];
@@ -26,7 +25,6 @@ if(isset($_POST['order'])){
 
    $cart_total = 0;
    $cart_products[] = '';
-
    $cart_query = $conn->prepare("SELECT * FROM `cart` WHERE user_id = ?");
    $cart_query->execute([$user_id]);
    if($cart_query->rowCount() > 0){
@@ -66,16 +64,18 @@ if(isset($_POST['order'])){
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>checkout</title>
 
-   <!-- font awesome cdn link  -->
+   
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
-   <!-- custom css file link  -->
+  
    <link rel="stylesheet" href="css/style.css">
 
 </head>
 <body>
    
 <?php include 'header.php'; ?>
+
+
 
 <section class="display-orders">
 
@@ -98,10 +98,10 @@ if(isset($_POST['order'])){
    <div class="grand-total">grand total : <span>$<?= $cart_grand_total; ?>/-</span></div>
 </section>
 
+
+
 <section class="checkout-orders">
-
    <form action="" method="POST">
-
       <h3>place your order</h3>
 
       <div class="flex">
@@ -117,6 +117,8 @@ if(isset($_POST['order'])){
             <span>your email :</span>
             <input type="email" name="email" placeholder="enter your email" class="box" required>
          </div>
+
+
          <div class="inputBox">
             <span>payment method :</span>
             <select name="method" class="box" required>
@@ -126,6 +128,8 @@ if(isset($_POST['order'])){
                <option value="paypal">paypal</option>
             </select>
          </div>
+
+
          <div class="inputBox">
             <span>address line 01 :</span>
             <input type="text" name="flat" placeholder="e.g. flat number" class="box" required>
@@ -152,16 +156,12 @@ if(isset($_POST['order'])){
          </div>
       </div>
 
+
       <input type="submit" name="order" class="btn <?= ($cart_grand_total > 1)?'':'disabled'; ?>" value="place order">
 
    </form>
 
 </section>
-
-
-
-
-
 
 
 

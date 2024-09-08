@@ -40,7 +40,7 @@ class User {
             $_SESSION['admin_id'] = $row['id']; 
             header('location:admin_page.php');
          } elseif ($row['usertype'] == 'Staff') {
-            $_SESSION['staff_id'] = $row['id']; 
+            $_SESSION['admin_id'] = $row['id']; 
             header('location:staff_page.php');
          } elseif ($row['usertype'] == 'Customer') {
             $_SESSION['user_id'] = $row['id'];
